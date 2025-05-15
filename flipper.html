@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Flipper</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      transition: background-color 0.3s ease;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    #colorBox {
+      font-size: 2rem;
+      margin: 20px;
+      padding: 15px 25px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #4caf50;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 10px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎨 Color Flipper 🎨</h1>
+  <div id="colorBox">Current Color: #f0f0f0</div>
+  <div>
+    <button onclick="flipColor()">Flip Color</button>
+    <button onclick="resetColor()">Restart</button>
+  </div>
+
+  <footer>Have fun flipping colors! 🎉</footer>
+
+  <script>
+    const colorBox = document.getElementById('colorBox');
+    const body = document.body;
+    const defaultColor = '#f0f0f0';
+
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function flipColor() {
+      const newColor = getRandomColor();
+      body.style.backgroundColor = newColor;
+      colorBox.textContent = `Current Color: ${newColor}`;
+    }
+
+    function resetColor() {
+      body.style.backgroundColor = defaultColor;
+      colorBox.textContent = `Current Color: ${defaultColor}`;
+    }
+  </script>
+</body>
+</html>

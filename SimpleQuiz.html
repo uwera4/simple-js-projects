@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Quiz App</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7f9fc;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .quiz-container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .answer-btn {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .answer-btn:hover {
+      background-color: #2980b9;
+    }
+
+    .score {
+      font-size: 1.1rem;
+      margin-top: 20px;
+    }
+
+    .restart-btn {
+      padding: 10px 20px;
+      margin-top: 20px;
+      font-size: 1rem;
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .restart-btn:hover {
+      background-color: #27ae60;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="question" class="question">Question goes here</div>
+    <div id="answers"></div>
+    <div id="score" class="score"></div>
+    <button id="restart" class="restart-btn" style="display:none;" onclick="startQuiz()">Restart Quiz</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "What is the capital of France?",
+        answers: ["Paris", "London", "Rome", "Berlin"],
+        correct: "Paris"
+      },
+      {
+        question: "Which language runs in a web browser?",
+        answers: ["Python", "Java", "C", "JavaScript"],
+        correct: "JavaScript"
+      },
+      {
+        question: "What does CSS stand for?",
+        answers: [
+          "Central Style Sheets",
+          "Cascading Style Sheets",
+          "Coded Style Sheets",
+          "Creative Style Syntax"
+        ],
+        correct: "Cascading Style Sheets"
+      },
+      {
+        question: "Which HTML tag is used to link JavaScript in HTML?",
+        answers: ["<js>", "<script>", "<link>", "<style>"],
+        correct: "<script>"
+      },
+      {
+        question: "Which HTML tag creates a line break?",
+        answers: ["<br>", "<lb>", "<break>", "<line>"],
+        correct: "<br>"
+      },
+      {
+        question: "What does HTML stand for?",
+        answers: [
+          "HyperText Markup Language",
+          "Home Tool Markup Language",
+          "Hyperlinks and Text Markup Language",
+          "HyperType Markup Language"
+        ],
+        correct: "HyperText Markup Language"
+      },
+      {
+        question: "Which of the following is a JavaScript framework?",
+        answers: ["Django", "React", "Flask", "Laravel"],
+        correct: "React"
+      },
+      {
+        question: "How do you declare a JavaScript variable?",
+        answers: ["v carName", "var carName", "let = carName", "variable carName"],
+        correct: "var carName"
+      }
+    ];
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    let currentIndex = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById("question");
+    const answersEl = document.getElementById("answers");
+    const scoreEl = document.getElementById("score");
+    const restartBtn = document.getElementById("restart");
+
+    function startQuiz() {
+      currentIndex = 0;
+      score = 0;
+      scoreEl.textContent = '';
+      restartBtn.style.display = "none";
+      shuffleArray(questions);
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const currentQuestion = questions[currentIndex];
+      questionEl.textContent = currentQuestion.question;
+      answersEl.innerHTML = "";
+
+      currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.textContent = answer;
+        button.classList.add("answer-btn");
+        button.onclick = () => selectAnswer(answer);
+        answersEl.appendChild(button);
+      });
+    }
+
+    function selectAnswer(selected) {
+      const correct = questions[currentIndex].correct;
+      if (selected === correct) {
+        score++;
+      }
+      currentIndex++;
+      if (currentIndex < questions.length) {
+        showQuestion();
+      } else {
+        showScore();
+      }
+    }
+
+    function showScore() {
+      questionEl.textContent = "Quiz Completed!";
+      answersEl.innerHTML = "";
+      scoreEl.textContent = `Your score: ${score} / ${questions.length}`;
+      restartBtn.style.display = "inline-block";
+    }
+
+    startQuiz();
+  </script>
+</body>
+</html>

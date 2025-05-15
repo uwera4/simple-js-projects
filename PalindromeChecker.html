@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Palindrome Checker</title>
+  <style>
+    body {
+      background-color: #eaf6f6;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Palindrome Checker</h2>
+    <input type="text" id="text-input" placeholder="Enter word or phrase" />
+    <button onclick="checkPalindrome()">Check</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function checkPalindrome() {
+      const input = document.getElementById("text-input").value;
+      const result = document.getElementById("result");
+
+      if (input.trim() === "") {
+        result.textContent = "Please enter a value.";
+        result.style.color = "red";
+        return;
+      }
+
+      const cleaned = input.replace(/[^A-Za-z0-9]/g, "").toLowerCase();
+      const reversed = cleaned.split("").reverse().join("");
+
+      if (cleaned === reversed) {
+        result.textContent = `"${input}" is a Palindrome!`;
+        result.style.color = "green";
+      } else {
+        result.textContent = `"${input}" is NOT a Palindrome.`;
+        result.style.color = "crimson";
+      }
+    }
+  </script>
+
+</body>
+</html>
